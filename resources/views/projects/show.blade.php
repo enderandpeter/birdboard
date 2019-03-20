@@ -66,16 +66,8 @@
 <body>
 <div class="flex-center position-ref full-height">
     <div class="content">
-        <h1>Birdboard</h1>
-        <ul>
-            @forelse ($projects as $project)
-                <li>
-                    <a href="{{ route('projects.show', $project) }}">{{ $project->title }}</a>
-                </li>
-            @empty
-                <div>No Projects Yet</div>
-            @endforelse
-        </ul>
+        <h1>{{ $project->title }}</h1>
+        <div>{{ $project->description }}</div>
     </div>
 </div>
 </body>

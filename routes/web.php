@@ -19,5 +19,6 @@ Route::name('projects.')->group(function(){
     Route::prefix('projects')->group(function(){
         Route::post('/', 'ProjectsController@store')->name('store');
         Route::get('/', 'ProjectsController@index')->name('index');
+        Route::get('/{project}', 'ProjectsController@show')->name('show');
     });
 });
