@@ -17,8 +17,12 @@ Route::get('/', function () {
 
 Route::name('projects.')->group(function(){
     Route::prefix('projects')->group(function(){
-        Route::post('/', 'ProjectsController@store')->name('store');
+        Route::post('/', 'ProjectsController@store')->name('store')->middleware('auth');
         Route::get('/', 'ProjectsController@index')->name('index');
         Route::get('/{project}', 'ProjectsController@show')->name('show');
     });
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

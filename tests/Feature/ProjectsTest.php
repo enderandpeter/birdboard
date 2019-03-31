@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Project;
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,6 +20,8 @@ class ProjectsTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
+        $this->actingAs(factory(User::class)->create());
+
         $attributes = [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
@@ -34,19 +37,28 @@ class ProjectsTest extends TestCase
         $this->withoutExceptionHandling();
 
         $project = factory(Project::class)->create();
-    
+
         // Pass the primary key of the Project model to the 'project' route parameter
         $this->get(route('projects.show', compact('project')))
             ->assertSee($project->description);
     }
 
     public function testProjectRequiresTitle(){
+        $this->actingAs(factory(User::class)->create());
         $attributes = factory(Project::class)->raw(['title' => '']);
         $this->post(route('projects.store'), $attributes)->assertSessionHasErrors('title');
     }
 
     public function testProjectRequiresDescription(){
+        $this->actingAs(factory(User::class)->create());
         $attributes = factory(Project::class)->raw(['description' => '']);
         $this->post(route('projects.store'), $attributes)->assertSessionHasErrors('description');
+    }
+
+    public function testOnlyAuthUserCanCreateProject(){
+        //$this->withoutExceptionHandling();
+
+        $attributes = factory(Project::class)->raw();
+        $this->post(route('projects.store'), $attributes)->assertRedirect('login');
     }
 }
