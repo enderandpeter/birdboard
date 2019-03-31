@@ -1,0 +1,19 @@
+ip: 192.168.8.110
+memory: 2048
+cpus: 2
+provider: hyperv
+authorize: ~/.ssh/id_rsa.pub
+keys:
+    - ~/.ssh/id_rsa
+folders:
+    -
+        map: ~/projects/vagrant
+        to: /home/vagrant/birdboard
+sites:
+    -
+        map: birdboard.test
+        to: /home/vagrant/birdboard/public
+databases:
+    - homestead
+name: birdboard
+hostname: birdboard

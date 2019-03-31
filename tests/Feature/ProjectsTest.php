@@ -34,7 +34,7 @@ class ProjectsTest extends TestCase
         $this->withoutExceptionHandling();
 
         $project = factory(Project::class)->create();
-
+    
         // Pass the primary key of the Project model to the 'project' route parameter
         $this->get(route('projects.show', compact('project')))
             ->assertSee($project->description);
